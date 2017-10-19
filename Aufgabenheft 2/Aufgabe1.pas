@@ -1,1 +1,0 @@
-program HalloWelt(input, output);
