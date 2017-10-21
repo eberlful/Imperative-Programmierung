@@ -16,7 +16,8 @@ Spaltensummen:
   Spalte 1: 19, 19 > 16,
   Spalte 2: 13, 13 <= 16,
 jetzt kann abgebrochen werden, da eine kleinere oder gleiche Spaltensumme gefunden wurde, also ZeilenSummeKleiner := false.}
-
+{$R+}
+{$B+}
 
 program MatrixSummen (input, output);
 { ueberprueft bei einer Matrix von integer-Zahlen, ob
@@ -43,36 +44,48 @@ function ZeilenSummeKleiner (var inMatrix : tMatrix;
     Spaltensumme }
 
 
+var
+i,
+summeZeile,
+summeSpalte1,
+summeSpalte2,
+summeSpalte3,
+summeSpalte4 : integer;
 
+begin
+    {Variablen initialiseren}
+    summeZeile := 0;
+    summeSpalte1 := 0;
+    summeSpalte2 := 0;
+    summeSpalte3 := 0;
+    summeSpalte4 := 0;
 
+    for i := 1 to SPALTENMAX do
+        begin
+            summeZeile :=  summeZeile + inMatrix[inZeilenNr, i];
+        end;
+    writeln('Summe der Zeile: ', summeZeile); 
 
+    for i := 1 to ZEILENMAX do
+        begin
+            summeSpalte1 := summeSpalte1 + inMatrix[i,1];
+            summeSpalte2 := summeSpalte2 + inMatrix[i,2];
+            summeSpalte3 := summeSpalte3 + inMatrix[i,3];
+            summeSpalte4 := summeSpalte4 + inMatrix[i,4];
+        end;
+    writeln('Summe der ersten Spalte: ', summeSpalte1);
+    writeln('Summe der zweiten Spalte: ', summeSpalte2);
+    writeln('Summe der dritten Spalte: ', summeSpalte3);
+    writeln('Summe der vierten Spalte: ', summeSpalte4);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    if (summeSpalte1 > summeZeile) and (summeSpalte2 > summeZeile) and (summeSpalte3 > summeZeile) and (summeSpalte4 > summeZeile) then
+        begin
+            ZeilenSummeKleiner := true;
+        end
+    else
+        begin
+            ZeilenSummeKleiner := false;
+        end;
 end;{ ZeilenSummeKleiner } 
 
 begin { Matrixelemente einlesen } 
