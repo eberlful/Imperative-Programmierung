@@ -38,31 +38,40 @@ begin
           if outRefAnfang = nil then
             begin
               new (Zeiger);
-              writeln(inRefAnfang1^.info, 'in Zeiger');
+              {writeln(inRefAnfang1^.info, 'in Zeiger');}
               Zeiger^.info := inRefAnfang1^.info;
               Zeiger^.next := outRefAnfang;
               outRefAnfang := Zeiger;
               new (Zeiger);
-              Zeiger^.next := inRefAnfang1.ne;
-              inRefAnfang1
+              Zeiger := inRefAnfang1^.next;
+              inRefAnfang1 := Zeiger;
               new (Zeiger);
-              writeln(inRefAnfang2^.info, 'in Zeiger');
+              {writeln(inRefAnfang2^.info, 'in Zeiger');}
               Zeiger^.info := inRefAnfang2^.info;
               Zeiger^.next := outRefAnfang;
               outRefAnfang := Zeiger;
+              new (Zeiger);
+              Zeiger := inRefAnfang2^.next;
+              inRefAnfang2 := Zeiger;
             end
           else
           begin
               new (Zeiger);
-              writeln(inRefAnfang1^.info, 'in Zeiger');
+              {writeln(inRefAnfang1^.info, 'in Zeiger');}
               Zeiger^.info := inRefAnfang1^.info;
               Zeiger^.next := outRefAnfang;
               outRefAnfang := Zeiger;
               new (Zeiger);
-              writeln(inRefAnfang2^.info, 'in Zeiger');
+              Zeiger := inRefAnfang1^.next;
+              inRefAnfang1 := Zeiger;
+              new (Zeiger);
+              {writeln(inRefAnfang2^.info, 'in Zeiger');}
               Zeiger^.info := inRefAnfang2^.info;
               Zeiger^.next := outRefAnfang;
               outRefAnfang := Zeiger;
+              new (Zeiger);
+              Zeiger := inRefAnfang2^.next;
+              inRefAnfang2 := Zeiger;
           end;
 
         end;
@@ -73,6 +82,9 @@ begin
           Zeiger^.info := inRefAnfang1^.info;
           Zeiger^.next := outRefAnfang;
           outRefAnfang := Zeiger;
+          new (Zeiger);
+          Zeiger := inRefAnfang1^.next;
+          inRefAnfang1 := Zeiger;
         end;
       {Falls nur noch in inRefAnfang2 was in der Liste steht}
       if (inRefAnfang1 = nil) and (inRefAnfang2 <> nil) then
@@ -81,6 +93,9 @@ begin
           Zeiger^.info := inRefAnfang2^.info;
           Zeiger^.next := outRefAnfang;
           outRefAnfang := Zeiger;
+          new (Zeiger);
+          Zeiger := inRefAnfang2^.next;
+          inRefAnfang2 := Zeiger;
         end;
     end;
 end;
