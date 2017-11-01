@@ -1,3 +1,6 @@
+{$R+}
+{$B+}
+
 program Parameter1 (output);
 { Dieses Programm hat keine sinnvolle Semantik, zeigt schlech-
   ten Programmierstil und dient nur zum Ueben der Parameterueber-

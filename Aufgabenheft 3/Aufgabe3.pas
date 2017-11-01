@@ -1,3 +1,6 @@
+{$R+}
+{$B+}
+
 program TesteAnhaengen (input, output);
 { testet die Prozedur anhaengen }
 {Schreiben Sie eine PASCAL-Prozedur anhaengen, die zwei verschiedene lineare Listen durch Hintereinanderhängen zu einer einzigen Liste verknüpft. 
@@ -16,17 +19,71 @@ Ein Aufruf der Prozedur bewirkt also, daß anschließend die next-Komponente des
   Gesamtliste : tRefListe;
 
 
-  procedure anhaengen (    inRefAnfang1,
+procedure anhaengen (    inRefAnfang1,
                            inRefAnfang2 : tRefListe;
                        var outRefAnfang : tRefListe);
   { Haengt die lineare Liste mit Anfangszeiger inRefAnfang2 an
     die Liste mit Anfangszeiger inRefAnfang1 an.
     Zurueckgegeben wird outRefAnfang, der Anfangszeiger der Ergebnisliste. }
 
+  var
+  Zeiger : tRefListe;
 
+begin
+  while (inRefAnfang1 <> nil) or (inRefAnfang2 <> nil) do
+    begin
+      {Falls noch beide Listen ein Element besitzen}
+      if (inRefAnfang1 <> nil) and (inRefAnfang2 <> nil) then
+        begin
+          if outRefAnfang = nil then
+            begin
+              new (Zeiger);
+              writeln(inRefAnfang1^.info, 'in Zeiger');
+              Zeiger^.info := inRefAnfang1^.info;
+              Zeiger^.next := outRefAnfang;
+              outRefAnfang := Zeiger;
+              new (Zeiger);
+              Zeiger^.next := inRefAnfang1.ne;
+              inRefAnfang1
+              new (Zeiger);
+              writeln(inRefAnfang2^.info, 'in Zeiger');
+              Zeiger^.info := inRefAnfang2^.info;
+              Zeiger^.next := outRefAnfang;
+              outRefAnfang := Zeiger;
+            end
+          else
+          begin
+              new (Zeiger);
+              writeln(inRefAnfang1^.info, 'in Zeiger');
+              Zeiger^.info := inRefAnfang1^.info;
+              Zeiger^.next := outRefAnfang;
+              outRefAnfang := Zeiger;
+              new (Zeiger);
+              writeln(inRefAnfang2^.info, 'in Zeiger');
+              Zeiger^.info := inRefAnfang2^.info;
+              Zeiger^.next := outRefAnfang;
+              outRefAnfang := Zeiger;
+          end;
 
-
-
+        end;
+      {Falls nur noch in inRefAnfang1 was in der Liste steht}
+      if (inRefAnfang1 <> nil) and (inRefAnfang2 = nil) then
+        begin
+          new (Zeiger);
+          Zeiger^.info := inRefAnfang1^.info;
+          Zeiger^.next := outRefAnfang;
+          outRefAnfang := Zeiger;
+        end;
+      {Falls nur noch in inRefAnfang2 was in der Liste steht}
+      if (inRefAnfang1 = nil) and (inRefAnfang2 <> nil) then
+        begin
+          new (Zeiger);
+          Zeiger^.info := inRefAnfang2^.info;
+          Zeiger^.next := outRefAnfang;
+          outRefAnfang := Zeiger;
+        end;
+    end;
+end;
 
 
 

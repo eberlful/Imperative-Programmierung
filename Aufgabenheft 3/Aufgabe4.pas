@@ -1,3 +1,6 @@
+{$R+}
+{$B+}
+
 {Handbewertete Aufgabe}
 program TesteSortiereListe(input, output);
 {Sortieren durch Einfügen (der sogenannte Insertionsort) ist effizient für bereits teilweise sortierte Listen. 

@@ -1,3 +1,6 @@
+{$R+}
+{$B+}
+
 program Aufgabe9 (input, output);
 
 type 

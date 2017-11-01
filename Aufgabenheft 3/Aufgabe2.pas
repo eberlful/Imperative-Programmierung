@@ -1,3 +1,6 @@
+{$R+}
+{$B+}
+
 program testeListenMaxBestimmen (input, output);
 { Testet die Prozedur ListenMaxBestimmen }
 {Implementieren Sie eine PASCAL-Prozedur ListenMaxBestimmen, die in einer linearen Liste von ganzen Zahlen das Maximum bestimmt. 
@@ -19,12 +22,38 @@ Der Parameter outOK soll genau dann den Wert false zugewiesen bekommen, wenn die
 procedure ListenMaxBestimmen (inRefAnfang: tRefListe; var outMax : integer; var outOK : boolean); 
 
 var
+MaxSpeicher : integer;
+i : integer;
 
 begin
+  i:=0;
+  if inRefAnfang <> nil then
+    begin
+      MaxSpeicher := inRefAnfang^.info;
+    end;
     while inRefAnfang <> nil do
         begin
-            
+          if inRefAnfang^.info > MaxSpeicher then
+            begin
+              MaxSpeicher := inRefAnfang^.info;
+              inRefAnfang := inRefAnfang^.next; 
+              i := i + 1;
+            end
+          else
+          begin
+          i := i + 1;
+          inRefAnfang := inRefAnfang^.next;
+          end;
         end;
+    if i = 0 then
+      begin
+        outOK := false;
+      end
+    else
+    begin
+      outOK := true;
+      outMax := MaxSpeicher;
+    end;
 end;
 
 

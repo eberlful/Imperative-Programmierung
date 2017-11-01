@@ -1,3 +1,6 @@
+{$R+}
+{$B+}
+
 {Es werden zwei positive ganze Zahlen eingelesen, die einen Bruch darstellen. 
 Dieser Bruch soll in gekürzter Form ausgegeben werden. Um diese Aufgabe zu erfüllen, geht man nach folgendem Algorithmus vor. 
 Erst findet man den größten gemeinsamen Teiler (ggT) von beiden Zahlen, dann kürzt man den Bruch (Zähler und Nenner werden durch den ggT dividiert). 
