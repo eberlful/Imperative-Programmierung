@@ -14,7 +14,7 @@ dienen lediglich der Veranschaulichung der verschiedenen Parameterübergabearten
 {
     A[x]
     B[]
-    C[x]
+    C[]
 }
 
 program KuerzenUndAusgeben (input, output);

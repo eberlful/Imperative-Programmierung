@@ -31,7 +31,7 @@ procedure moveToFront (
   UmhaengeHilfe : tRefListe;
   gefunden : boolean;
 
-begin
+    begin
   gefunden := false;
   if ioAnfang <> nil then { Liste ist nicht leer }
     if ioAnfang^.info = inSuchwert then 
@@ -50,7 +50,7 @@ begin
           ZuletztGeprueftesElement := ZuletztGeprueftesElement^.next
     end; { else }
   outGefunden := gefunden
-end; { moveToFront }
+    end; { moveToFront }
 
 begin
     writeln('Geben sie eine Auswahl an (A, B, C)');

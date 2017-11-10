@@ -16,7 +16,7 @@ program Parameter1 (output);
     var 
     a : integer; 
 
-    procedure lokalProc ({call_by_2} g, h, i: integer);
+    procedure lokalProc ({call_by_2}var g, h, i: integer);
 
       var 
       b : integer;
@@ -47,4 +47,5 @@ end. { Parameter1 }
 
 {Lösung: 
 - C
+- A
 }

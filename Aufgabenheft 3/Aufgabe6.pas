@@ -16,7 +16,7 @@ program Parameter1 (output);
     var 
     a : integer; 
 
-    procedure lokalProc ({call_by_2} g, h, i: integer);
+    procedure lokalProc ({call_by_2}var g, h, i: integer);
 
       var 
       b : integer;
@@ -55,7 +55,7 @@ end. { Parameter1 }
 
     C[]     Die Parameterübergabe erfolgt bei der Prozedur globalProc als var-Parameter und bei der Prozedur lokalProc als Wertparameter.
 
-    D[]     Die Parameterübergabe erfolgt bei der Prozedur globalProc als Wertparameter und bei der Prozedur lokalProc als var-Parameter.
+    D[X]     Die Parameterübergabe erfolgt bei der Prozedur globalProc als Wertparameter und bei der Prozedur lokalProc als var-Parameter.
 
     E[]     Die Ausgabe des Programms ist unabhängig von der Art der Parameterübergabe.
 }
