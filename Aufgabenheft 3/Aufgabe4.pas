@@ -28,100 +28,103 @@ Keinesfalls sollen die Werte der Knoten kopiert oder überschrieben werden.}
   procedure SortiereListe (var ioRefListe : tRefListe);
   { sortiert eine lineare Liste aufsteigend }
 
-  var
-  ZwischenSpeicher,
-  SourceList,
-  DestinationList,
-  DestAktList,
-  PreDestList : tRefListe;
-  i : integer;
-  check : boolean;
+    var
+    ZwischenSpeicher,
+    SourceList,
+    DestinationList,
+    DestAktList,
+    PreDestList : tRefListe;
+    i : integer;
+    check : boolean;
 
   begin
     SourceList := ioRefListe;
     DestAktList := ioRefListe;
     new (DestinationList);
     i := 0;
-    while SourceList <> nil do
+    while SourceList <> nil do  
+    begin {Ueberprueft ob Quellliste noch Element besitz}
+      i := i + 1;
+      ZwischenSpeicher := SourceList;
+      SourceList := ZwischenSpeicher^.next;
+      ZwischenSpeicher^.next := nil;
+        
+      if i = 1 then {Beim ersten Element nur in neue Liste kopieren }
       begin
-        i := i + 1;
-
-
-        ZwischenSpeicher := SourceList;
-        SourceList := ZwischenSpeicher^.next;
-
+        DestinationList := ZwischenSpeicher;
+        DestinationList^.next := nil;
+      end;
+        
+      if i = 2 then {Zweiter Durchgang muss nur einfach verglichen werden}
+      begin {Fügt Element nach dem erstem Element ein}
+        if DestinationList^.info <= ZwischenSpeicher^.info then
+        begin
+        DestinationList^.next := ZwischenSpeicher;
         ZwischenSpeicher^.next := nil;
-        
-        if i = 1 then {Beim ersten Element nur in neue Liste kopieren }
-          begin
-            DestinationList := ZwischenSpeicher;
-            DestinationList^.next := nil;
-          end;
-        
-        if i = 2 then {Zweiter Durchgang muss nur einfach verglichen werden}
-          begin {Fügt Element nach dem erstem Element ein}
-            if DestinationList^.info <= ZwischenSpeicher^.info then
-              begin
-                DestinationList^.next := ZwischenSpeicher;
-                ZwischenSpeicher^.next := nil;
-              end
-            else  {Fügt Element vor dem erstem Element ein}
-            begin
-              ZwischenSpeicher^.next := DestinationList;
-              DestinationList := ZwischenSpeicher;
-              ZwischenSpeicher := nil;
-            end;
-          end;
+        end
+        else  {Fügt Element vor dem erstem Element ein}
+        begin
+        ZwischenSpeicher^.next := DestinationList;
+        DestinationList := ZwischenSpeicher;
+        ZwischenSpeicher := nil;
+        end;
+      end;
 
-        if i > 2 then {Ab dritten Durchlauf wird hier iteriert}
-          begin
-            {Zuweisung der Durchlaufvariablen zur Einfügefunktion
-            DestAktList -> Aktuelles Element
-            PreDestList -> Element vor dem aktuellem Element}
-            DestAktList := DestinationList^.next;
-            PreDestList := DestinationList;
+      if i > 2 then {Ab dritten Durchlauf wird hier iteriert}
+      begin
+        {Zuweisung der Durchlaufvariablen zur Einfügefunktion
+        DestAktList -> Aktuelles Element
+        PreDestList -> Element vor dem aktuellem Element}
+        DestAktList := DestinationList^.next;
+        PreDestList := DestinationList;
+
             while DestAktList <> nil do
-              begin
-                if (PreDestList^.info <= ZwischenSpeicher^.info) and (DestAktList^.info >= ZwischenSpeicher^.info) then {Wenn erfüllt, dann einfügen des aktuellen Elements}
-                  begin
-                   PreDestList^.next := ZwischenSpeicher;
-                   ZwischenSpeicher^.next := DestAktList; 
-                   check := true;
-                  end;
+              begin {Durchlaeuft die Zielliste um richtige Position zu finden}
+                if (PreDestList^.info <= ZwischenSpeicher^.info) and (DestAktList^.info >= ZwischenSpeicher^.info) then 
+                begin {Wenn erfüllt, dann einfügen des aktuellen Elements}
+                  PreDestList^.next := ZwischenSpeicher;
+                  ZwischenSpeicher^.next := DestAktList; 
+                  check := true;
+                end;
 
-                if  ZwischenSpeicher^.info < DestinationList^.info then {Wenn Element kleiner als Listenanfang ist, am Anfang einfügen}
-                  begin
-                    ZwischenSpeicher^.next := DestinationList;
-                    DestinationList := ZwischenSpeicher;
-                  end;
+                if  ZwischenSpeicher^.info < DestinationList^.info then 
+                begin {Wenn Element kleiner als Listenanfang ist, am Anfang einfügen}
+                  ZwischenSpeicher^.next := DestinationList;
+                  DestinationList := ZwischenSpeicher;
+                end;
                 
                 if (ZwischenSpeicher^.info > DestAktList^.info) and (DestAktList^.next = nil) then
-                  begin {Fügt letztes Listenelement ein}
-                    DestAktList^.next := ZwischenSpeicher;
-                    ZwischenSpeicher := nil;
-                    check := true;
-                  end;
+                begin {Fügt letztes Listenelement ein}
+                  DestAktList^.next := ZwischenSpeicher;
+                  ZwischenSpeicher := nil;
+                  check := true;
+                end;
 
                 {Zuweisung des Nächsten Elements für den Durchlauf}
                 PreDestList := DestAktList;
                 DestAktList := PreDestList^.next;
 
-                if check = true then
-                  begin
-                    DestAktList := nil;
-                  end;
+                if check = true then  {Setzt Listenende}
+                begin
+                  DestAktList := nil;
+                end;
+
+                {Setzt Status fuer das letzte Element zurueck}
                 check := false;
               end;
-          end;
       end;
-    if i = 0 then
-      begin
-        ioRefListe := nil;
-      end
+    end;
+
+    if i = 0 then {Falls Liste leer war}
+    begin
+      ioRefListe := nil;
+    end
     else
     begin
       ioRefListe := DestinationList;
-    end;  
+    end;
+
+    {Loescht Zeiger aus Speicher}  
     dispose (DestinationList);
   end;
 
