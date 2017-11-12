@@ -28,23 +28,27 @@ Keinesfalls sollen die Werte der Knoten kopiert oder überschrieben werden.}
   procedure SortiereListe (var ioRefListe : tRefListe);
   { sortiert eine lineare Liste aufsteigend }
 
-    var
-    ZwischenSpeicher,
-    SourceList,
-    DestinationList,
-    DestAktList,
-    PreDestList : tRefListe;
-    i : integer;
-    check : boolean;
+  var
+  ZwischenSpeicher, {Speicher fuer das zu sortierende Element}
+  SourceList, {Zeiger, der auf die zu sortierende Liste Zeigt}
+  DestinationList,  {Zeiger, der auf den Anfang der sortierten Liste zeigt}
+  DestAktList,  {Zeiger für den Suchdurchlauf}
+  PreDestList : tRefListe;  {Zeiger für den Suchdurchlauf}
+  i : integer;
+  check : boolean;
 
   begin
+    {Uebergabe der Liste}
     SourceList := ioRefListe;
     DestAktList := ioRefListe;
-    new (DestinationList);
-    i := 0;
+    new (DestinationList);  {Erzeugung des Zwischenspeichers}
+    i := 0; {Zaehler zuruecksetzten}
+
     while SourceList <> nil do  
     begin {Ueberprueft ob Quellliste noch Element besitz}
       i := i + 1;
+
+      {Lade neues Element von unsortierter Liste in Zwischenspeicher}
       ZwischenSpeicher := SourceList;
       SourceList := ZwischenSpeicher^.next;
       ZwischenSpeicher^.next := nil;
@@ -119,7 +123,7 @@ Keinesfalls sollen die Werte der Knoten kopiert oder überschrieben werden.}
     begin
       ioRefListe := nil;
     end
-    else
+    else {Falls Liste nicht leer war}
     begin
       ioRefListe := DestinationList;
     end;
