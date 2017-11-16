@@ -24,8 +24,10 @@ Welche der fünf folgenden Varianten geben die Knotenwerte für beliebige Binär
 {
     [A]
 }
+var
+auswahl : char;
 
-procedure SymAusgabe (
+procedure SymAusgabeA (
               inRefWurzel : tRefBinBaum);
 {gibt die Knotenwerte eines Binärbaums in
  symmetrischer Reihenfolge aus}
@@ -46,7 +48,7 @@ end; {SymAusgabe}
 }
 
 
-procedure SymAusgabe (
+procedure SymAusgabeB (
               inRefWurzel : tRefBinBaum);
 {gibt die Knotenwerte eines Binärbaums in
  symmetrischer Reihenfolge aus}
@@ -64,7 +66,7 @@ end; {SymAusgabe}
 }
 
 
-procedure SymAusgabe (
+procedure SymAusgabeC (
               inRefWurzel : tRefBinBaum);
 {gibt die Knotenwerte eines Binärbaums in 
  symmetrischer Reihenfolge aus}
@@ -84,7 +86,7 @@ end; {SymAusgabe}
 }
 
 
-procedure SymAusgabe (
+procedure SymAusgabeD (
               inRefWurzel : tRefBinBaum);
 {gibt die Knotenwerte eines Binärbaums in 
  symmetrischer Reihenfolge aus}
@@ -106,7 +108,7 @@ end; {SymAusgabe}
 }
 
 
-procedure SymAusgabe (
+procedure SymAusgabeD (
               inRefWurzel : tRefBinBaum);
 {gibt die Knotenwerte eines Binärbaums in
  symmetrischer Reihenfolge aus}
@@ -121,3 +123,9 @@ begin
       SymAusgabe(inRefWurzel^.rechts)
   end
 end; {SymAusgabe}
+
+begin
+  writeln('Geben Sie eine Auswahl ein (A-E)');
+  readln(auswahl);
+  
+end;

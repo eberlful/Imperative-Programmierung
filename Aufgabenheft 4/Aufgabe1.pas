@@ -31,27 +31,36 @@ program testeZeigListMax(input, output);
 
 
 
+  var
+  Zeiger : tRefListe;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  begin
+    {Zeiger := inRefAnfang;}
+    writeln('start vergleich: ', inRefAnfang^.info);
+    if inRefAnfang^.next = nil then
+    begin
+      {Gibt am Schluss der Liste Element weiter}
+      writeln('Letztes Listenelement einfügen ', inRefAnfang^.info);
+      ZeigListMax := inRefAnfang;
+      writeln('Hallo2');
+    end
+    else
+    begin
+      writeln('Hallo');
+      Zeiger := ZeigListMax(inRefAnfang^.next);
+      writeln('bier');
+      {Vergleicht den rekursiv uebergebenen MaxWert mit dem aktuellen Listenelement}
+      if Zeiger^.info > inRefAnfang^.info then
+      begin
+        ZeigListMax := Zeiger;
+      end
+      else {Aktuelles Listenelement ist groesser}
+      begin
+        ZeigListMax := inRefAnfang;
+      end;
+    end;
+    writeln('ende');
+  end;
 
  procedure LiesListe(var outListe : tRefListe);
   { Liest eine (evtl. leere) Liste ein und gibt deren
