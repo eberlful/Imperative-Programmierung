@@ -11,6 +11,10 @@ const
   tIndex = UNTEN..OBEN;
   tFeld = array[tIndex] of integer;
 
+var
+auswahl : char;
+i, eingabe, auswahlOben, auswahlUnten : integer;
+feld : tFeld;
 {  Welche der folgenden Funktionen bestimmen das Maximum in einem Feld mit den variablen Grenzen inUnten und inOben korrekt?
 Sie können davon ausgehen, dass beim (ersten) Aufruf der Funktionen stets
 UNTEN <= InUnten <= InOben <= OBEN gilt.
@@ -169,3 +173,58 @@ begin
       HilfMax := inFeld[i];
   FeldMaxE := HilfMax
 end; { FeldMaxE }
+
+procedure FeldEingeben(var inFeld : tFeld);
+begin
+  writeln('Geben Sie ',OBEN, ' Zahlen ein');
+  for i := UNTEN to OBEN do
+    begin
+      readln(eingabe);
+      inFeld[i] := eingabe;
+    end;
+end;
+
+function AuswahlO() : integer;
+begin
+  writeln('Geben Sie den oberen Bereichspunkt ein');
+  readln(auswahlOben);
+  AuswahlO := auswahlOben;
+end;
+
+function AuswahlU() : integer;
+begin
+  writeln('Geben Sie den unteren Bereichspunkt ein');
+  readln(auswahlUnten);
+  AuswahlU := auswahlUnten;
+end;
+
+begin
+  FeldEingeben(feld);
+  
+  writeln('Geben Sie eine Auswahl an');
+  readln(auswahl);
+  if (auswahl = 'A') or (auswahl = 'a') then
+    begin
+      FeldMaxA(feld, AuswahlU(),AuswahlO());
+    end;
+  
+  if (auswahl = 'B') or (auswahl = 'b') then
+    begin
+      FeldMaxB(feld, AuswahlU(),AuswahlO());
+    end;
+
+  if (auswahl = 'C') or (auswahl = 'c') then
+    begin
+      FeldMaxC(feld, AuswahlU(),AuswahlO());
+    end;
+
+  if (auswahl = 'D') or (auswahl = 'd') then
+    begin
+      FeldMaxD(feld, AuswahlU(),AuswahlO());
+    end;
+
+  if (auswahl = 'E') or (auswahl = 'e') then
+    begin
+      FeldMaxE(Feld, AuswahlU(),AuswahlO());
+    end;
+end.
