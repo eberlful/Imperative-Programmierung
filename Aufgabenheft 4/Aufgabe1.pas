@@ -36,11 +36,19 @@ program testeZeigListMax(input, output);
 
   begin
     {Zeiger := inRefAnfang;}
-    writeln('start vergleich: ', inRefAnfang^.info);
+    {writeln('start vergleich: ', inRefAnfang^.info);}
+    if inRefAnfang = nil then
+    begin
+      writeln('Leere Eingabefolge!');
+      inRefAnfang^.next := nil;
+    end else
+    begin
+      
+    end;
     if inRefAnfang^.next = nil then
     begin
       {Gibt am Schluss der Liste Element weiter}
-      writeln('Letztes Listenelement einfügen ', inRefAnfang^.info);
+      {writeln('Letztes Listenelement einfügen ', inRefAnfang^.info);}
       ZeigListMax := inRefAnfang;
       writeln('Hallo2');
     end

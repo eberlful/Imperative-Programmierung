@@ -26,7 +26,7 @@ Welche der fünf folgenden Varianten geben die Knotenwerte für beliebige Binär
 }
 var
 auswahl : char;
-refBaumKnoten, refBaumBlatt1, refBaumBlatt2, refBaumBlatt3, refBaumBlatt4 : tRefBinBaum;
+refBaumKnoten6, refBaumBlatt1, refBaumBlatt3, refBaumBlatt4, refBaumBlatt8 : tRefBinBaum;
 
 procedure SymAusgabeA (
               inRefWurzel : tRefBinBaum);
@@ -129,27 +129,27 @@ begin
   writeln('Geben Sie eine Auswahl ein (A-E)');
   readln(auswahl);
   
-  new (refBaumKnoten);
-  new (refBaumBlatt1);
-  new (refBaumBlatt2);
+  new (refBaumKnoten6);
   new (refBaumBlatt3);
+  new (refBaumBlatt8);
+  new (refBaumBlatt1);
   new (refBaumBlatt4);
 
-  refBaumKnoten^.info := 6;
-  refBaumKnoten^.rechts := refBaumBlatt2;
-  refBaumKnoten^.links := refBaumBlatt1;
+  refBaumKnoten6^.info := 6;
+  refBaumKnoten6^.rechts := refBaumBlatt8;
+  refBaumKnoten6^.links := refBaumBlatt3;
 
-  refBaumBlatt1^.info := 3;
-  refBaumBlatt1^.rechts := refBaumBlatt3;
-  refBaumBlatt1^.links := refBaumBlatt4;
+  refBaumBlatt3^.info := 3;
+  refBaumBlatt3^.rechts := refBaumBlatt4;
+  refBaumBlatt3^.links := refBaumBlatt1;
 
-  refBaumBlatt2^.info := 8;
-  refBaumBlatt2^.rechts := nil;
-  refBaumBlatt2^.links := nil;
+  refBaumBlatt8^.info := 8;
+  refBaumBlatt8^.rechts := nil;
+  refBaumBlatt8^.links := nil;
 
-  refBaumBlatt3^.info := 1;
-  refBaumBlatt3^.rechts := nil;
-  refBaumBlatt3^.links := nil;
+  refBaumBlatt1^.info := 1;
+  refBaumBlatt1^.rechts := nil;
+  refBaumBlatt1^.links := nil;
 
   refBaumBlatt4^.info := 4;
   refBaumBlatt4^.rechts := nil;
@@ -157,26 +157,26 @@ begin
 
   if (auswahl = 'A') or (auswahl = 'a') then
   begin
-    SymAusgabeA(refBaumKnoten);
+    SymAusgabeA(refBaumKnoten6);
   end;
 
   if (auswahl = 'B') or (auswahl = 'b') then
   begin
-    SymAusgabeB(refBaumKnoten);
+    SymAusgabeB(refBaumKnoten6);
   end;
 
   if (auswahl = 'C') or (auswahl = 'c') then
   begin
-    SymAusgabeC(refBaumKnoten);
+    SymAusgabeC(refBaumKnoten6);
   end;
 
   if (auswahl = 'D') or (auswahl = 'd') then
   begin
-    SymAusgabeD(refBaumKnoten);
+    SymAusgabeD(refBaumKnoten6);
   end;
 
   if (auswahl = 'E') or (auswahl = 'e') then
   begin
-    SymAusgabeE(refBaumKnoten);
+    SymAusgabeE(refBaumKnoten6);
   end;  
 end.
