@@ -11,6 +11,7 @@ type
                links:tRefBinBaum;
                rechts:tRefBinBaum
              end;
+             
 {Schreiben Sie eine rekursive Funktion, die einen Binärbaum mit mindestens zwei Knoten übergeben bekommt und den gesamten Baum durchläuft. 
 Dabei entscheidet Ihre Funktion ob der Wert jedes Blattes des Baumes größer ist als jeder der Werte der Knoten auf dem Pfad von der Wurzel zu diesem Blatt. 
 Neben dem üblichen Zeiger auf die Baumwurzel ist ein weiterer Übergabeparameter erforderlich. 
