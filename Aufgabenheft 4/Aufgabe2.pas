@@ -36,21 +36,26 @@ var
 function BlattMax ( inRefWurzel : tRefBinBaum; inPfadMax : tNatZahl) : Boolean;
   { prüft ob alle Blätter des Baumes die Maxima der Pfade zu ihnen sind }
 
-
-
-
-
-
-
-
-
-
-
-
-
+var
+zustandBaum : boolean;
 
 begin
+  if (inRefWurzel^.links <> nil) then
+  begin
+    if (inRefWurzel^.Wert < inPfadMax) then
+    begin
+      zustandBaum := BlattMax(inRefWurzel, inPfadMax);
+    end
+    else
+    begin
+      zustandBaum := BlattMax(inRefWurzel, inRefWurzel^.Wert);
+    end;
+  end;
+
+  if (inRefWurzel^.rechts <> nil) then
+  begin
     
+  end;    
 end;
 
 procedure BaumAufbauen (var outWurzel : tRefBinBaum) ;
