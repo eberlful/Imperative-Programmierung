@@ -1,0 +1,27 @@
+Testlauf 1:
+1 4 2 7 0
+Alle Blaetter sind groesser als alle Knoten auf den jeweiligen Pfaden zu ihnen.
+
+Testlauf 2:
+1 11 2 5 3 8 4 13 5 12 7 14 0
+Alle Blaetter sind groesser als alle Knoten auf den jeweiligen Pfaden zu ihnen.
+
+Testlauf 3:
+1 11 2 8 3 12 4 15 5 9 0
+Mind. ein Blatt ist nicht groesser als alle Knoten auf seinem Pfad.
+
+Testlauf 4:
+1 91 2 5 3 8 4 13 5 12 7 14 0
+Mind. ein Blatt ist nicht groesser als alle Knoten auf seinem Pfad.
+
+Testlauf 5:
+1 11 2 5 3 42 4 13 6 12 7 14 0
+Mind. ein Blatt ist nicht groesser als alle Knoten auf seinem Pfad.
+
+Testlauf 6:
+1 11 2 5 3 8 4 13 5 23 7 14 10 1 11 42 0
+Mind. ein Blatt ist nicht groesser als alle Knoten auf seinem Pfad.
+
+Testlauf 7:
+1 11 2 5 3 8 4 13 5 23 7 14 10 1 11 1 0
+Mind. ein Blatt ist nicht groesser als alle Knoten auf seinem Pfad.
