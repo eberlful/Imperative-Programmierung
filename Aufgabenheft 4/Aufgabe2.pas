@@ -3,7 +3,7 @@
 
 {Gegeben seien folgende Typdefinitionen für einen Binärbaum von natürlichen Zahlen:}
 
-type
+{type
   tNatZahl = 1..maxint;
   tRefBinBaum = ^tBinBaum;
   tBinBaum = record
@@ -38,24 +38,72 @@ function BlattMax ( inRefWurzel : tRefBinBaum; inPfadMax : tNatZahl) : Boolean;
   { prüft ob alle Blätter des Baumes die Maxima der Pfade zu ihnen sind }
 
 var
-zustandBaum : boolean;
+zustandBaum, uebergabe : boolean;
 
 begin
+  zustandBaum := true;
+  uebergabe := false; {Wenn uebergabe = true -> dann wurde ein Wert uebergeben}
+
   if (inRefWurzel^.links <> nil) then
   begin
     if (inRefWurzel^.Wert < inPfadMax) then
     begin
       zustandBaum := BlattMax(inRefWurzel, inPfadMax);
+      uebergabe := true;
     end
     else
     begin
       zustandBaum := BlattMax(inRefWurzel, inRefWurzel^.Wert);
+      uebergabe := true;
     end;
   end;
 
-  if (inRefWurzel^.rechts <> nil) then
+  if (zustandBaum = false) and (uebergabe = true) then
   begin
-    
+    BlattMax := false;
+  end;
+
+  if (inRefWurzel^.rechts <> nil) and (zustandBaum = true) then
+  begin
+    if (inRefWurzel^.Wert < inPfadMax) then
+    begin
+      zustandBaum := BlattMax(inRefWurzel, inPfadMax);
+      uebergabe := true;
+    end
+    else
+    begin
+      zustandBaum := BlattMax(inRefWurzel, inRefWurzel^.Wert);
+      uebergabe := true;
+    end;
+  end;
+
+  if (zustandBaum = false) and (uebergabe = true) then
+  begin
+    BlattMax := false;
+  end;
+
+  if (uebergabe = true) then
+  begin
+    BlattMax := zustandBaum;
+  end
+  else
+  begin
+    writeln('Letztes  Element oder Fehler');
+  end;
+  if (inRefWurzel^.links = nil) and (inRefWurzel^.rechts = nil) and (uebergabe = false) then
+  begin
+    if (inRefWurzel^.Wert > inPfadMax) then
+    begin
+      BlattMax := true;
+    end
+    else
+    begin
+      BlattMax := false;
+    end;
+  end
+  else
+  begin
+    writeln('Uebergabeparameter wahr');
   end;    
 end;
 
