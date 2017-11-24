@@ -38,75 +38,67 @@ function BlattMax ( inRefWurzel : tRefBinBaum; inPfadMax : tNatZahl) : Boolean;
   { prüft ob alle Blätter des Baumes die Maxima der Pfade zu ihnen sind }
 
 var
-zustandBaum, uebergabe : boolean;
+zustandLinks, zustandRechts, uebergabe, ersterDurchlauf : boolean;
 
 begin
-  zustandBaum := true;
-  uebergabe := false; {Wenn uebergabe = true -> dann wurde ein Wert uebergeben}
+  uebergabe := false;
+  zustandLinks := true;
+  zustandRechts := true;
+  ersterDurchlauf := false;
 
-  if (inRefWurzel^.links <> nil) then
+  if inRefWurzel^.links <> nil then
   begin
-    if (inRefWurzel^.Wert < inPfadMax) then
-    begin
-      zustandBaum := BlattMax(inRefWurzel, inPfadMax);
-      uebergabe := true;
-    end
-    else
-    begin
-      zustandBaum := BlattMax(inRefWurzel, inRefWurzel^.Wert);
-      uebergabe := true;
-    end;
-  end;
 
-  if (zustandBaum = false) and (uebergabe = true) then
-  begin
-    BlattMax := false;
-  end;
-
-  if (inRefWurzel^.rechts <> nil) and (zustandBaum = true) then
-  begin
-    if (inRefWurzel^.Wert < inPfadMax) then
-    begin
-      zustandBaum := BlattMax(inRefWurzel, inPfadMax);
-      uebergabe := true;
-    end
-    else
-    begin
-      zustandBaum := BlattMax(inRefWurzel, inRefWurzel^.Wert);
-      uebergabe := true;
-    end;
-  end;
-
-  if (zustandBaum = false) and (uebergabe = true) then
-  begin
-    BlattMax := false;
-  end;
-
-  if (uebergabe = true) then
-  begin
-    BlattMax := zustandBaum;
-  end
-  else
-  begin
-    writeln('Letztes  Element oder Fehler');
-  end;
-  if (inRefWurzel^.links = nil) and (inRefWurzel^.rechts = nil) and (uebergabe = false) then
-  begin
+    {Uebergibt das groessere Element}
     if (inRefWurzel^.Wert > inPfadMax) then
     begin
+      zustandLinks := BlattMax(inRefWurzel^.links, inRefWurzel^.Wert);
+    end
+    else
+    begin
+      zustandLinks := BlattMax(inRefWurzel^.links, inPfadMax);
+    end;
+  end;
+  if inRefWurzel^.rechts <> nil then
+  begin
+    {Uebergibt das groessere Element}
+    if (inRefWurzel^.Wert > inPfadMax) then
+    begin
+      zustandRechts := BlattMax(inRefWurzel^.rechts, inRefWurzel^.Wert);
+    end
+    else
+    begin
+      zustandRechts := BlattMax(inRefWurzel^.rechts, inPfadMax);
+    end;
+  end;
+  if (zustandLinks = false) or (zustandRechts = false) then
+  begin
+    BlattMax := false;
+    uebergabe := true;
+  end;
+  {Springt nur bei letztem Element in diese Abfrage}
+  if (inRefWurzel^.links = nil) and (inRefWurzel^.rechts = nil) then
+  begin
+  {Vergleicht letztes Element mit Vorgaenger}
+    ersterDurchlauf := true;
+    if (inPfadMax < inRefWurzel^.Wert) then
+    begin
       BlattMax := true;
+      uebergabe := true;
     end
     else
     begin
       BlattMax := false;
-    end;
-  end
-  else
+      uebergabe := true;
+    end;    
+  end;
+  {Uberprueft ob beide Knoten richtig sind}
+  if (zustandRechts = true) and (zustandLinks = true) and (uebergabe = false) and (ersterDurchlauf = false) then
   begin
-    writeln('Uebergabeparameter wahr');
-  end;    
+    BlattMax := true;
+    uebergabe := true;
+  end;
 end;
-
 procedure BaumAufbauen (var outWurzel : tRefBinBaum) ;
   var 
     index,
