@@ -240,7 +240,7 @@ begin
     stateFlag := false;
     spielHallo();
     {stateFlage -> true = Spiel noch nicht zu Ende / false = Spiel zu Ende}
-    while (stateFlag == false) do
+    while (stateFlag = false) do
     begin
         {Werte Spiel aus}
         //ersatzFeld := werteSpielAus(spielfeld);
