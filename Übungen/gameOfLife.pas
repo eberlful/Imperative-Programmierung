@@ -21,6 +21,7 @@ tySpielfeld = 0..ySpielfeld;
 var
 spielfeld, ersatzFeld : tSpielfeld;
 fehler : ^boolean;
+stateFlag : boolean;
 
 procedure aktMonitor(feld : tSpielfeld);
 {Aktuallisiert am Monitor die Ausgabe der Änderungen des Spiels}
@@ -28,11 +29,34 @@ begin
      
 end;
 
+procedure spielHallo();
+
+const
+xmax = xSpielfeld+1;
+ymax = xSpielfeld+1;
+
+var
+i, j : integer;
+
+begin
+    for i := 0 to xmax do
+    begin
+        for j := 0 to ymax do
+        begin
+            {Prueft auf Rahmenelement, if cursor is on frame}
+            if (i = 0) or (j = 0) then
+            begin
+                write('0',5,5);
+            end;
+        end;
+    end;
+end;
+
 function erzeugeFeld():tSpielfeld;
 {Zeugt erstmalig das Spielfeld mit Zufallswerten}
 var
-xSpielfeld : txSpielfeld;
-ySpielfeld : tySpielfeld;
+{xSpielfeld : txSpielfeld;
+ySpielfeld : tySpielfeld;}
 matrix : tSpielfeld;
 i, j : integer;
 begin
@@ -42,7 +66,7 @@ begin
         for j := 0 to ySpielfeld do
         begin
             {Erzeugt Rand}
-            if (i == 0) or (i == xSpielfeld) or (j == 0) or (j == ySpielfeld) then
+            if (i = 0) or (i = xSpielfeld) or (j = 0) or (j = ySpielfeld) then
             begin
                 matrix[i,j] := 9;
             end
@@ -59,7 +83,7 @@ function werteSpielAus(matrix : tSpielfeld):tSpielfeld;
 
 var
 gameArray : tSpielfeld;
-g, h, lifeCounter : integer;
+g, h, lifeCounter, deathCounter : integer;
 
 begin
     gameArray := matrix;
@@ -74,7 +98,7 @@ begin
             deathCounter := 0;
 
             {Auswertung des ersten Elements oben links}
-            if (matrix[g-1, h-1]==9) or (matrix[g-1, h-1]==0) then
+            if (matrix[g-1, h-1]=9) or (matrix[g-1, h-1]=0) then
             begin
                 deathCounter := deathCounter + 1;
             end
@@ -84,7 +108,7 @@ begin
             end;
 
             {Auwertung des zweiten Elements in der ersten Zeile}
-            if (matrix[g, h-1]==9) or (matrix[g, h-1]==0) then
+            if (matrix[g, h-1]=9) or (matrix[g, h-1]=0) then
             begin
                 deathCounter := deathCounter + 1;
             end
@@ -94,7 +118,7 @@ begin
             end;
 
             {Auswertung des dritten Elements in der ersten Zeile}
-            if (matrix[g+1, h-1]==9) or (matrix[g, h+1]==0) then
+            if (matrix[g+1, h-1]=9) or (matrix[g, h+1]=0) then
             begin
                 deathCounter := deathCounter + 1;
             end
@@ -104,7 +128,7 @@ begin
             end;
 
             {Auswertung des ersten Elements in der zweiten Zeile}
-            if (matrix[g-1, h]==9) or (matrix[g-1, h]==0) then
+            if (matrix[g-1, h]=9) or (matrix[g-1, h]=0) then
             begin
                 deathCounter := deathCounter + 1;
             end
@@ -114,7 +138,7 @@ begin
             end;
 
             {Auswertung des zweiten Elements in der zweiten Zeile}
-            if (matrix[g, h]==9) or (matrix[g, h]==0) then
+            if (matrix[g, h]=9) or (matrix[g, h]=0) then
             begin
                 deathCounter := deathCounter + 1;
             end
@@ -124,7 +148,7 @@ begin
             end;
 
             {Auswertung des dritten Elements in der zweiten Zeile}
-            if (matrix[g+1, h]==9) or (matrix[g+1, h]==0) then
+            if (matrix[g+1, h]=9) or (matrix[g+1, h]=0) then
             begin
                 deathCounter := deathCounter + 1;
             end
@@ -134,7 +158,7 @@ begin
             end;
 
             {Auswertung des ersten Elements in der dritten Zeile}
-            if (matrix[g-1, h+1]==9) or (matrix[g-1, h+1]==0) then
+            if (matrix[g-1, h+1]=9) or (matrix[g-1, h+1]=0) then
             begin
                 deathCounter := deathCounter + 1;
             end
@@ -144,7 +168,7 @@ begin
             end;
 
             {Auswertung des zweiten Elements in der dritten Zeile}
-            if (matrix[g, h+1]==9) or (matrix[g, h+1]==0) then
+            if (matrix[g, h+1]=9) or (matrix[g, h+1]=0) then
             begin
                 deathCounter := deathCounter + 1;
             end
@@ -154,7 +178,7 @@ begin
             end;
 
             {Auswertung des dritten Elements in der dritten Zeile}
-            if (matrix[g+1, h+1]==9) or (matrix[g+1, h+1]==0) then
+            if (matrix[g+1, h+1]=9) or (matrix[g+1, h+1]=0) then
             begin
                 deathCounter := deathCounter + 1;
             end
@@ -174,9 +198,9 @@ begin
             else
             begin
                 {Tote Zelle}
-                if (matrix[g, h] == 0) then
+                if (matrix[g, h] = 0) then
                 begin
-                    if (lifeCounter == 3) then
+                    if (lifeCounter = 3) then
                     begin
                         gameArray[g, h] := 1;
                     end;
@@ -187,7 +211,7 @@ begin
                 end;
 
                 {Lebende Zelle}
-                if (matrix[g, h] == 1) then
+                if (matrix[g, h] = 1) then
                 begin
                     if (lifeCounter<=1) then
                     begin
@@ -211,20 +235,17 @@ begin
 end;
 
 begin
-    
-end;
-
-begin
     {Erzeugen eines Feldes}
     spielfeld := erzeugeFeld();
-
+    stateFlag := false;
+    spielHallo();
     {stateFlage -> true = Spiel noch nicht zu Ende / false = Spiel zu Ende}
-    while (stateFlag == true) do
+    while (stateFlag == false) do
     begin
         {Werte Spiel aus}
-        ersatzFeld := werteSpielAus(spielfeld);
-        stateFlag := compareGame(spielfeld, ersatzFeld);
-        aktMonitor(ersatzFeld);
+        //ersatzFeld := werteSpielAus(spielfeld);
+        //stateFlag := compareGame(spielfeld, ersatzFeld);
+        //aktMonitor(ersatzFeld);
     end;
 
     
