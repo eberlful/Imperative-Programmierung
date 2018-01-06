@@ -25,7 +25,7 @@ fehler : ^boolean;
 procedure aktMonitor(feld : tSpielfeld);
 {Aktuallisiert am Monitor die Ausgabe der Änderungen des Spiels}
 begin
-    
+     
 end;
 
 function erzeugeFeld():tSpielfeld;
