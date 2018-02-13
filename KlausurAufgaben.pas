@@ -174,6 +174,55 @@ type
         end;
     end;
 
+    {NK 2009 - Aufgabe 2}
+    procedure LoescheErstesElement (var ioAnfang : tRefAnfang);
+    {Löscht das erste Element aus der nicht leeren zyklischen Liste
+    mit Anfangszeiger ioAnfang.}
+
+    var letztesElement, aktuell,
+        nachfolger, listenAnfang : tRefAnfang;
+
+    begin
+        if (ioAnfang^.next = nil) then
+        begin
+            dispose(ioAnfang);
+            ioAnfang := nil;
+        end
+        else
+        begin
+            listenAnfang := ioAnfang;
+            aktuell := ioAnfang;
+            nachfolger := aktuell^.next;
+            ioAnfang := nachfolger;
+            while (nachfolger <> listenAnfang) do
+            begin
+                nachfolger := nachfolger^.next;
+                aktuell := aktuell^.next;
+            end;
+            aktuell^.next := ioAnfang;
+            dispose(listenAnfang);
+        end;
+    end;
+
+    {NK 2009 - Aufgabe 4}
+    procedure rueckwaertsAddieren (var ioAnfang : tRefAnfang);
+    {Addiert rekursiv das vorherige Element zu dem vorvorherigen}
+
+    var hilfszeiger : tRefAnfang;
+
+    begin
+        hilfszeiger := ioAnfang;
+        if (ioAnfang^.next <> nil) then
+        begin
+            rueckwaertsAddieren(hilfszeiger);
+            ioAnfang^.info := ioAnfang^.info + hilfszeiger^.info;
+        end
+        else
+        begin
+            
+        end;
+    end;
+
     begin
         writeln('Array Ausgabe:');
         feld := arrayErzeugen();
@@ -184,8 +233,14 @@ type
         writeln('Einfach verkettete Liste Ausgabe:');
         eVListe := einfachVerketteteListeErzeugen();
         einfachVerketteteListeAusgeben(eVListe);
+        rueckwaertsAddieren(eVListe);
+        writeln('Liste Ausgabe nach Aufgabe:');
+        einfachVerketteteListeAusgeben(eVListe);
         
         writeln('Ringliste Ausgabe:');
         ringListe := ringListeErzeugen();
+        ringListeAusgeben(ringListe);
+        LoescheErstesElement(ringListe);
+        writeln('Ringliste Ausgabe nach Aufgabe:');
         ringListeAusgeben(ringListe);
     end.
