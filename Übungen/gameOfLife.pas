@@ -3,11 +3,13 @@
 program gameOfLife (output);
 {Erzeugt ein Spielfeld mit zufällig erzeugtem Spielfeld
 *******************************************************
-***                 0 = true                        ***
-***                 1 = false                       ***
+***                 0 = Tod                         ***
+***                 1 = Leben                       ***
 ***                 9 = Rand                        ***
 ***                99 = Fehler                      ***
 *******************************************************}
+
+uses Crt;
 
 const
 xSpielfeld = 50;
@@ -20,34 +22,26 @@ tySpielfeld = 0..ySpielfeld;
 
 var
 spielfeld, ersatzFeld : tSpielfeld;
-fehler : ^boolean;
+fehler : boolean;
 stateFlag : boolean;
 
-procedure aktMonitor(feld : tSpielfeld);
+procedure aktMonitor(var feld : tSpielfeld);
 {Aktuallisiert am Monitor die Ausgabe der Änderungen des Spiels}
-begin
-     
-end;
-
-procedure spielHallo();
-
-const
-xmax = xSpielfeld+1;
-ymax = xSpielfeld+1;
 
 var
 i, j : integer;
 
 begin
-    for i := 0 to xmax do
+    ClrScr;
+    for i := 1 to xSpielfeld-1 do
     begin
-        for j := 0 to ymax do
+        for j := 1 to ySpielfeld-1 do
         begin
-            {Prueft auf Rahmenelement, if cursor is on frame}
-            if (i = 0) or (j = 0) then
+            if (feld[i,j] = 1) then
             begin
-                write('0',5,5);
-            end;
+                GotoXY(i,j);
+                write('0');
+            end; 
         end;
     end;
 end;
@@ -232,21 +226,20 @@ begin
             end;
         end;
     end;
+    werteSpielAus  := gameArray;
 end;
 
 begin
     {Erzeugen eines Feldes}
     spielfeld := erzeugeFeld();
+    aktMonitor(spielfeld);
     stateFlag := false;
-    spielHallo();
     {stateFlage -> true = Spiel noch nicht zu Ende / false = Spiel zu Ende}
-    while (stateFlag = false) do
+    {while (stateFlag = false) do
     begin
         {Werte Spiel aus}
-        //ersatzFeld := werteSpielAus(spielfeld);
-        //stateFlag := compareGame(spielfeld, ersatzFeld);
-        //aktMonitor(ersatzFeld);
-    end;
-
-    
+        {ersatzFeld := werteSpielAus(spielfeld);
+        stateFlag := compareGame(spielfeld, ersatzFeld);
+        aktMonitor(ersatzFeld);
+    end;}
 end.

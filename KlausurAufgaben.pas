@@ -44,7 +44,7 @@ type
                 end;
 
     var feld : tFeld;
-        eVListe : tRefAnfang;
+        eVListe, ringListe : tRefAnfang;
         min, max : integer;
 
     function arrayErzeugen() : tFeld;
@@ -83,6 +83,52 @@ type
         einfachVerketteteListeErzeugen := listenAnfang;
     end;
 
+    {Ende dieser Liste zeigt wieder auf Anfang -> Ringliste}
+    function ringListeErzeugen() : tRefAnfang;
+    {Erzeugt eine einfach verkettete Liste}
+    var i : integer;
+        laufZeiger, listenAnfang, neuElement : tRefAnfang;
+
+    begin
+        Randomize;
+        new (neuElement);
+        neuElement^.info := Random(50);
+        listenAnfang := neuElement;
+        laufZeiger := listenAnfang;
+        for i := 2 to MAXANZAHLLISTE do
+        begin
+            new (neuElement);
+            neuElement^.info := Random(50);
+            laufZeiger^.next := neuElement;
+            laufZeiger := laufZeiger^.next;
+        end;
+        laufZeiger^.next := listenAnfang;
+        ringListeErzeugen := listenAnfang;
+    end;
+
+    procedure ringListeAusgeben(inListenAnfang : tRefAnfang);
+    {Gibt eine einfach verkettete Liste aus}
+
+    var listenAnfang : tRefAnfang;
+        listenEnde : Boolean;
+        i : integer;
+
+    begin
+        i := 0;
+        listenAnfang := inListenAnfang;
+        listenEnde := false;
+        while (i < 7) do
+        begin
+            i := i + 1;
+            if inListenAnfang^.info = listenAnfang^.info then
+            begin
+                listenEnde := true;
+            end;
+            writeln(inListenAnfang^.info);
+            inListenAnfang := inListenAnfang^.next;
+        end;
+    end;
+
     procedure einfachVerketteteListeAusgeben(inListenAnfang : tRefAnfang);
     {Gibt eine einfach verkettete Liste aus}
 
@@ -114,7 +160,7 @@ type
 
     begin
         outMin := maxint;
-        outMax := minint;
+        outMax := -maxint;
         for i := 1 to MAXANZAHLARRAY do
         begin
             if (outMax < inFeld[i]) then
@@ -131,9 +177,15 @@ type
     begin
         writeln('Array Ausgabe:');
         feld := arrayErzeugen();
-        FeldMinMax(feld,min, max);
+        {FeldMinMax(feld,min, max);
+        writeln('Maximum: ', max);
+        writeln('Minimum: ', min);}
         arrayAusgeben(feld);
         writeln('Einfach verkettete Liste Ausgabe:');
         eVListe := einfachVerketteteListeErzeugen();
         einfachVerketteteListeAusgeben(eVListe);
+        
+        writeln('Ringliste Ausgabe:');
+        ringListe := ringListeErzeugen();
+        ringListeAusgeben(ringListe);
     end.
