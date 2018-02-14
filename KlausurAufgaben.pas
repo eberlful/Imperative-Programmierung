@@ -223,6 +223,20 @@ type
         end;
     end;
 
+    procedure rueckwaertsAddieren2 (ioAnfang : tRefAnfang);
+    {.....................................................}
+
+    var hilfszeiger : tRefAnfang;
+
+    begin
+        if (ioAnfang^.next <> nil) then
+        begin
+            hilfszeiger := ioAnfang^.next;
+            rueckwaertsAddieren2(hilfszeiger);
+            ioAnfang^.info := ioAnfang^.info + hilfszeiger^.info;
+        end;
+    end;
+
     begin
         writeln('Array Ausgabe:');
         feld := arrayErzeugen();
@@ -233,14 +247,14 @@ type
         writeln('Einfach verkettete Liste Ausgabe:');
         eVListe := einfachVerketteteListeErzeugen();
         einfachVerketteteListeAusgeben(eVListe);
-        rueckwaertsAddieren(eVListe);
+        rueckwaertsAddieren2(eVListe);
         writeln('Liste Ausgabe nach Aufgabe:');
         einfachVerketteteListeAusgeben(eVListe);
         
-        writeln('Ringliste Ausgabe:');
+        {writeln('Ringliste Ausgabe:');
         ringListe := ringListeErzeugen();
         ringListeAusgeben(ringListe);
         LoescheErstesElement(ringListe);
         writeln('Ringliste Ausgabe nach Aufgabe:');
-        ringListeAusgeben(ringListe);
+        ringListeAusgeben(ringListe);}
     end.
