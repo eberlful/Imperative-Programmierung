@@ -45,7 +45,7 @@ type
 
     var feld : tFeld;
         eVListe, ringListe : tRefAnfang;
-        min, max : integer;
+        min, max, eingabe : integer;
 
     function arrayErzeugen() : tFeld;
     {Erzeugt ein Feld von Array}
@@ -237,24 +237,46 @@ type
         end;
     end;
 
+    {HK 2010 - Aufgabe 1}
+    procedure NachVorn (inWert : integer; var ioRefAnfang : tRefAnfang);
+    {Sucht eine Liste nach inWert und setzt dieses Element an erster Position}
+
+        var anfangsZeiger, prev, aktuell, inWertZeiger : tRefAnfang;
+            gefunden : Boolean;
     begin
-        writeln('Array Ausgabe:');
-        feld := arrayErzeugen();
-        {FeldMinMax(feld,min, max);
-        writeln('Maximum: ', max);
-        writeln('Minimum: ', min);}
-        arrayAusgeben(feld);
-        writeln('Einfach verkettete Liste Ausgabe:');
+        gefunden := false;
+        anfangsZeiger := ioRefAnfang;
+        aktuell := ioRefAnfang;
+        if aktuell^.info <> inWert then
+        begin
+            prev := aktuell;
+            aktuell := aktuell^.next;
+            while (aktuell <> nil) and (gefunden = false) do
+            begin
+                if aktuell^.info = inWert then
+                begin
+                    inWertZeiger := aktuell;
+                    gefunden := true;
+                    prev^.next := aktuell^.next;
+                    inWertZeiger^.next := anfangsZeiger;
+                    ioRefAnfang := inWertZeiger;
+                end;
+                if gefunden = false then
+                begin
+                    prev := aktuell;
+                    aktuell := aktuell^.next;
+                end;
+                
+            end;
+        end;
+    end;
+
+    begin
         eVListe := einfachVerketteteListeErzeugen();
         einfachVerketteteListeAusgeben(eVListe);
-        rueckwaertsAddieren2(eVListe);
-        writeln('Liste Ausgabe nach Aufgabe:');
+
+        writeln('Geben sie ein Wert ein');
+        readln(eingabe);
+        NachVorn(eingabe, eVListe);
         einfachVerketteteListeAusgeben(eVListe);
-        
-        {writeln('Ringliste Ausgabe:');
-        ringListe := ringListeErzeugen();
-        ringListeAusgeben(ringListe);
-        LoescheErstesElement(ringListe);
-        writeln('Ringliste Ausgabe nach Aufgabe:');
-        ringListeAusgeben(ringListe);}
     end.
